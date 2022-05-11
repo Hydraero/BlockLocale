@@ -1,5 +1,5 @@
-var BlockVote = artifacts.require("BlockVote");
+var Election = artifacts.require("Election.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(BlockVote, "Best rapper of all time?");
+  deployer.deploy(Election);
 };

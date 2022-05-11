@@ -1,10 +1,10 @@
 pragma solidity ^0.4.21;
 contract Election {
-
+    
     struct Candidate {
+        uint candidateID;
         string candidateName;
         uint voteCount;
-
     }
 
     struct Voter {
@@ -17,7 +17,7 @@ contract Election {
     string public electionName;             
 
     mapping(address => Voter) public voters;            //keeps track of voters
-    //mapping(uint => Candidate) public candidates;       //stores/keeps track candidates
+    mapping(uint => Candidate) public candidatesMap;       //stores/keeps track candidates
     Candidate[] public candidates;                      //array of candidates to be voted for
     uint public totalVotes;                             //Stores total votes
     uint public candidatesCount;                        //Stores candidates count
@@ -27,16 +27,24 @@ contract Election {
         _;                                              //executes everything in the function if requirement (is owner) is met;         
     }
 
+    //delete later
+    string public candidate;
+    constructor() public {
+        candidate = "Candidate 1";
+        owner = msg.sender;
+    }
+    /*
     //smart contract constructor
     constructor(string _name) public {
         owner = msg.sender;                             //the (address) owner of the contract (whoever deployed the contract) also owns the Election
         electionName = _name;
     }
-    
+    */
     //add candidate function
     function addCandidate(string _name) ownerOnly public {
         candidatesCount ++;
-        candidates.push(Candidate(_name, 0));
+        candidates.push(Candidate(candidatesCount,_name, 0));
+        candidatesMap[candidatesCount] = Candidate(candidatesCount,_name, 0);           //Update later
     }
 
     function authorize(address _user) ownerOnly public {
@@ -50,11 +58,14 @@ contract Election {
         voters[msg.sender].vote = _candidateID;
         voters[msg.sender].voted = true;                 //marks the voter as already having voted
 
-        candidates[_candidateID].voteCount ++;
+        candidatesMap[_candidateID].voteCount ++;
         totalVotes ++;
     }
 
     function end() ownerOnly public{
         selfdestruct(owner);
     }
+    
+
+
 }
