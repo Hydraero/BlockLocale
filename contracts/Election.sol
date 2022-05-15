@@ -27,26 +27,33 @@ contract Election {
         _;                                              //executes everything in the function if requirement (is owner) is met;         
     }
 
-    //delete later
-    string public candidate;
+    //Temporary constructor
     constructor() public {
-        candidate = "Candidate 1";
-        owner = msg.sender;
+        
+        addCandidate("Candidate 1");
+        addCandidate("Candidate 2");
     }
-    /*
+    /* Will use this instead of above constructor 
     //smart contract constructor
     constructor(string _name) public {
         owner = msg.sender;                             //the (address) owner of the contract (whoever deployed the contract) also owns the Election
         electionName = _name;
     }
     */
+    //temporary addCandidate function
+    function addCandidate(string _name) public {
+        candidatesCount ++;
+        candidates.push(Candidate(candidatesCount,_name, 0));
+        candidatesMap[candidatesCount] = Candidate(candidatesCount,_name, 0);           //Update later
+    }
+    /*
     //add candidate function
     function addCandidate(string _name) ownerOnly public {
         candidatesCount ++;
         candidates.push(Candidate(candidatesCount,_name, 0));
         candidatesMap[candidatesCount] = Candidate(candidatesCount,_name, 0);           //Update later
     }
-
+    */
     function authorize(address _user) ownerOnly public {
         voters[_user].authorized = true;
     }

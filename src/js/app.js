@@ -83,7 +83,7 @@ App = {
       candidatesSelect.empty();
 
       for (var i = 1; i <= candidatesCount; i++) {
-        electionInstance.candidates(i).then(function(candidate) {
+        electionInstance.candidatesMap(i).then(function(candidate) {
           var id = candidate[0];
           var name = candidate[1];
           var voteCount = candidate[2];
@@ -107,19 +107,6 @@ App = {
       content.show();
     }).catch(function(error) {
       console.warn(error);
-    });
-  },
-
-  castVote: function() {
-    var candidateId = $('#candidatesSelect').val();
-    App.contracts.Election.deployed().then(function(instance) {
-      return instance.vote(candidateId, { from: App.account });
-    }).then(function(result) {
-      // Wait for votes to update
-      $("#content").hide();
-      $("#loader").show();
-    }).catch(function(err) {
-      console.error(err);
     });
   }
 };
