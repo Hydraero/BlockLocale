@@ -8,6 +8,7 @@ The application can be tested using the Truffle framework in conjunction with Ga
 
 Currently the unit tests on this application include:
 - Tests that an election intitiates with 0 total votes to ensure no 
-- Tests that two candidates are initiated with corrects values. This means candidates ID's start at 1 & 2 and both intitate with 0 votes each.
+- Tests that the election intitiates with 2 candidates.
+- Tests that the two candidates are initiated with corrects values. This means candidates ID's start at 1 & 2 respectively and both intitate with 0 votes each.
 
 

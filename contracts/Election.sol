@@ -1,4 +1,4 @@
-pragma solidity ^0.4.21;
+pragma solidity ^0.8.12;
 contract Election {
     
     struct Candidate {
@@ -35,25 +35,26 @@ contract Election {
     }
     /* Will use this instead of above constructor 
     //smart contract constructor
-    constructor(string _name) public {
+    constructor(string memory _name) public {
         owner = msg.sender;                             //the (address) owner of the contract (whoever deployed the contract) also owns the Election
         electionName = _name;
     }
     */
     //temporary addCandidate function
-    function addCandidate(string _name) public {
+    function addCandidate(string memory _name) public {
         candidatesCount ++;
         candidates.push(Candidate(candidatesCount,_name, 0));
         candidatesMap[candidatesCount] = Candidate(candidatesCount,_name, 0);           //Update later
     }
     /*
     //add candidate function
-    function addCandidate(string _name) ownerOnly public {
+    function addCandidate(string memory _name) ownerOnly public {
         candidatesCount ++;
         candidates.push(Candidate(candidatesCount,_name, 0));
         candidatesMap[candidatesCount] = Candidate(candidatesCount,_name, 0);           //Update later
     }
     */
+    //Allows owner only privileges
     function authorize(address _user) ownerOnly public {
         voters[_user].authorized = true;
     }
@@ -68,11 +69,11 @@ contract Election {
         candidatesMap[_candidateID].voteCount ++;
         totalVotes ++;
     }
-
+    /* Deprecated function
     function end() ownerOnly public{
         selfdestruct(owner);
     }
-    
+    */
 
 
 }
