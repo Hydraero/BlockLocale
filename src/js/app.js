@@ -37,7 +37,7 @@ App = {
     });
   },
 
-  /*
+  
   // Listen for events emitted from the contract
   listenForEvents: function() {
     App.contracts.Election.deployed().then(function(instance) {
@@ -54,7 +54,7 @@ App = {
       });
     });
   },
-  */
+  
   render: function() {
     var electionInstance;
     var loader = $("#loader");
@@ -107,6 +107,18 @@ App = {
       content.show();
     }).catch(function(error) {
       console.warn(error);
+    });
+  },
+  castVote: function() {
+    var candidateId = $('#candidatesSelect').val();
+    App.contracts.Election.deployed().then(function(instance) {
+      return instance.vote(candidateId, { from: App.account });
+    }).then(function(result) {
+      // Wait for votes to update
+      $("#content").hide();
+      $("#loader").show();
+    }).catch(function(err) {
+      console.error(err);
     });
   }
 };
